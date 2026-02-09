@@ -1,5 +1,70 @@
-commit 507565e4681526980782a110da9ba621aa16690d
-Author: swethad2005@gmail.com <swetha@gmail.com>
-Date:   Mon Feb 9 14:43:18 2026 +0530
-
-    First commit
+swetha@swetha-VirtualBox:~$ history
+    1  pwd
+    2  ls
+    3  cd ..
+    4  ls
+    5  cd ..
+    6  ls
+    7  cd h
+    8  cd home/swetha/
+    9  ls
+   10  pwd
+   11  mkdir swetha
+   12  ls
+   13  ls -l
+   14  ls -a
+   15  cd swetha
+   16  touch new.txt
+   17  ls
+   18  vim new.txt
+   19  history
+   20  vi new.txt
+   21  ls
+   22  cat new.txt
+   23  ls *.txt
+   24  ls new*
+   25  touch new2.txt
+   26  touch new3.txt
+   27  touch new4.txt
+   28  mkdir siva
+   29  cd ..
+   30  mkdir sobika
+   31  touch sample.txt
+   32  ls
+   33  cd sobika .
+   34  cd sobika
+   35  touch new20.txt
+   36  vi new20.txt
+   37  cat new20.txt
+   38  ls
+   39  cd ..
+   40  ls
+   41  cp sobika/new20.txt swetha/
+   42  ls swetha/
+   43  cd sobika/
+   44  touch new21.txt
+   45  vi new21.txt
+   46  ls
+   47  cat new21/txt
+   48  cat new21.txt
+   49  cat new20.txt
+   50  vi new20.txt
+   51  cat new20.txt
+   52  cd ..
+   53  cd swetha/
+   54  cat new20.txt
+   55  c ..
+   56  cd ..
+   57  mv sobika/new21.txt swetha/
+   58  cd sobika/
+   59  ls
+   60  cd ..
+   61  cd swetha/
+   62  ls
+   63  cd ..
+   64  sudo apt update
+   65  sudo upgrade -y
+   66  sudo apt upgrade -y
+   67  git clone https://github.com/SwethaDharmaraj/Devops.git
+   68  git history
+   69  history
