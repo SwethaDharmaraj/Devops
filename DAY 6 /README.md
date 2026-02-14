@@ -10,6 +10,7 @@ ansible --version
 If installed correctly, the Ansible version details will be displayed.
 
 # Ansible Apache Deployment – Commands
+
 1. Clone Repository
 git clone https://github.com/jagadeeshkanna97/ansible-k.git
 cd ansible-k
