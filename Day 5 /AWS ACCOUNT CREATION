@@ -1,0 +1,180 @@
+AWS EC2 Deployment & Terraform Setup
+
+This documentation provides a step-by-step guide for creating an AWS account, launching Windows and Ubuntu EC2 instances, connecting via SSH/RDP, installing Apache, and managing infrastructure using Terraform.
+
+1. Create AWS Account
+
+Go to AWS
+ → Click Create an AWS Account.
+
+Enter Email ID and Account Name (e.g., Vaishh-DevOps) → Click Verify Email.
+
+Set Root User Password → Click Continue.
+
+Enter Personal Contact Information → Click Continue.
+
+Add Payment Information (Debit/Credit Card) → Click Verify and Continue.
+
+Identity Verification → Enter OTP → Click Continue.
+
+Select Basic Support (Free) → Click Complete Sign Up.
+
+Wait for account activation (up to 24 hours).
+
+Login to AWS Console: https://aws.amazon.com
+ → Sign in as Root User.
+
+2. Launch Windows EC2 Instance
+
+Login to AWS Console → Search EC2.
+
+Click Launch Instance.
+
+Name Instance → Windows-Server.
+
+Choose AMI → Microsoft Windows Server 2022 Base.
+
+Instance Type → t2.micro (Free Tier).
+
+Create Key Pair → Name: windows-key, Type: RSA, Format: .pem → Download.
+
+Network Settings → Allow RDP (3389) and HTTP (80).
+
+Launch Instance → Wait until Running.
+
+Connect:
+
+Select Instance → Click Connect → RDP Client → Download .rdp file
+
+Decrypt Windows password using .pem file
+
+Connect via Remote Desktop.
+
+3. Launch Ubuntu EC2 Instance
+
+Launch Instance → Name: Ubuntu-Server.
+
+Choose AMI → Ubuntu Server 22.04 LTS.
+
+Instance Type → t2.micro (Free Tier).
+
+Create Key Pair → Name: ubuntu-key, Type: RSA, Format: .pem → Download.
+
+Network Settings → Allow SSH (22) and HTTP (80).
+
+Launch Instance → Wait until Running.
+
+4. Connect to Ubuntu EC2
+# Set permissions for .pem file
+chmod 400 ubuntu-key.pem
+
+# Connect via SSH
+ssh -i ubuntu-key.pem ubuntu@<public-ip>
+
+
+Replace <public-ip> with your EC2 public IP.
+
+5. Install Apache Server on Ubuntu
+# Update system
+sudo apt update
+
+# Install Apache
+sudo apt install apache2 -y
+
+# Start and enable Apache
+sudo systemctl start apache2
+sudo systemctl enable apache2
+
+# Check status
+sudo systemctl status apache2
+
+
+Open browser → http://<public-ip> → See Apache2 Ubuntu Default Page.
+
+Optional: Custom Webpage
+cd /var/www/html
+sudo nano index.html
+
+
+Add:
+
+<h1>Hello Vaishh – Apache Server Running on AWS EC2</h1>
+
+
+Save and refresh browser.
+
+6. AWS IAM & CLI Setup
+6.1 Create IAM User
+
+AWS Console → IAM → Users → Add User
+
+User name: terraform-user → Programmatic access
+
+Permissions → Attach policy: AdministratorAccess
+
+Save Access Key ID and Secret Access Key.
+
+6.2 Install AWS CLI on Ubuntu
+# Update system
+sudo apt update -y
+sudo apt install -y unzip curl
+
+# Download AWS CLI
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+
+# Verify
+aws --version
+
+# Configure
+aws configure
+
+
+Enter IAM credentials when prompted.
+
+7. Install Terraform on Ubuntu
+sudo apt update -y
+sudo apt install -y gnupg software-properties-common curl
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+sudo apt update -y
+sudo apt install terraform -y
+
+# Verify
+terraform -version
+
+8. Terraform Project Setup
+# Create project folder
+mkdir terraform-ec2
+cd terraform-ec2
+
+# Create main.tf with your EC2, Key Pair, Security Group, and variables
+
+Example Variables (variables.tf)
+variable "aws_region" { default = "us-east-1" }
+variable "instance_type" { default = "t3.micro" }
+variable "existing_key_pair_name" { default = "devuserkey" }
+variable "generated_key_pair_name" { default = "terraform-ec2-key" }
+variable "public_key_path" { default = "~/.ssh/id_rsa.pub" }
+variable "allowed_ssh_cidr" { default = "0.0.0.0/0" }
+
+9. Terraform Commands
+# Initialize project
+terraform init
+
+# Validate syntax
+terraform validate
+
+# Preview resources
+terraform plan
+
+# Apply configuration
+terraform apply
+# Type "yes" to confirm
+
+# List resources
+terraform state list
+
+# Destroy resources (clean up)
+terraform destroy
